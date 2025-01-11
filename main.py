@@ -42,29 +42,30 @@ def get_random_times(start_time="9:20:00", end_time="17:10:00", count=3):
     import datetime
     start = datetime.datetime.strptime(start_time, "%H:%M:%S")
     end = datetime.datetime.strptime(end_time, "%H:%M:%S")
-    seconds = (end - start).total_seconds()
+    seconds = int((end - start).total_seconds())
     # ToDo randomize it better
     times = [start + datetime.timedelta(seconds=random.randint(0, seconds)) for _ in range(count)]
-    return [time.strftime("%H:%M:%S") for time in times]
+    return sorted([time.strftime("%H:%M:%S") for time in times])
 
 # Flow
 # 1. Extract contributions
 url = "https://github.com/users/torvalds/contributions"
 contributions = extract_contributions(url)
+print(f"{len(contributions)=}")
 
 # 2. Date Filter
-start_date = "2023-01-01"
-end_date = "2024-01-01"
+start_date = "2024-01-01"
+end_date = "2025-01-01"
 selected_contributions = {k: v for k, v in contributions.items() if start_date <= k <= end_date}
+print(f"{len(selected_contributions)=}")
 
 # 3. Commit
 for _date, count in selected_contributions.items():
     times = get_random_times(start_time="9:20:00", end_time="17:10:00", count=count)
     for _time in times:
-        _date = f"{_date} {_time}"
         git_commit(
             commit_message=f"Commit on {_date} {_time}",
-            date=_date,
+            date=f"{_date} {_time}",
             name="i3130002",
             email="i3130002@gmail.com",
         )
