@@ -56,7 +56,7 @@ print(f"{len(contributions)=}")
 # 2. Date Filter
 start_date = "2024-01-01"
 end_date = "2025-01-01"
-selected_contributions = {k: v for k, v in contributions.items() if start_date <= k <= end_date}
+selected_contributions = {k: v for k, v in contributions.items() if start_date <= k < end_date}
 print(f"{len(selected_contributions)=}")
 
 # 3. Commit
