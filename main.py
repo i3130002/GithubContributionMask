@@ -60,7 +60,8 @@ selected_contributions = {k: v for k, v in contributions.items() if start_date <
 print(f"{len(selected_contributions)=}")
 
 # 3. Commit
-for _date, count in selected_contributions.items():
+for _date in sorted(selected_contributions.keys()):
+    count = selected_contributions[_date]
     times = get_random_times(start_time="9:20:00", end_time="17:10:00", count=count)
     for _time in times:
         git_commit(
